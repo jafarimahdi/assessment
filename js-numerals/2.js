@@ -19,11 +19,11 @@ function humanize(num) {
         "sixteen",
         "seventeen",
         "eighteen",
-        "nineteen",
+        "nineteen"
     ];
     var tens = [
         "",
-        "",
+        "ten",
         "twenty",
         "thirty",
         "forty",
@@ -36,118 +36,105 @@ function humanize(num) {
 
     var numString = num.toString(); // convert to string
 
-    let beginning = +numString.slice(0,2); // for number with length (5,8,11,14)
-    // console.log(beginning);
+    let beginning = +(numString.slice(0, 2)); // for number with length (5,8,11,14)
+    // console.log(2 + beginning);
 
     if (num < 0) throw new Error("Negative numbers are not supported.");
-    if (num === 0) return "zero";
+    if (num.length === 1 && num === 0 ) return "zero";
 
-    //the case of 1 - 20
-    if (num < 20) {
+    //the case of 1 - 10
+    if (num < 10) {
         return ones[num];
     }
 
+    // connect to beginning 
     if (numString.length === 2) {
-        return tens[numString[0]] + " " + ones[numString[1]];
+        return(num < 20)? ones[beginning] : tens[numString[0]] + " " + ones[numString[1]];
     }
 
-    //100 and more
+
+    //100 - 999 
     if (numString.length == 3) {
         if (numString[1] === "0" && numString[2] === "0")
-            return ones[numString[0]] + " hundred";
+            return ones[numString[0]] + " Hundred";
         else
             return (
                 ones[numString[0]] +
-                " hundred and " +
+                " Hundred and " +
                 humanize(+(numString[1] + numString[2]))
             );
     }
 
-
+    // 1,000 - 9,999
     if (numString.length === 4) {
         let end = +numString.slice(1);
 
-        if (end === 0){ return ones[numString[0]] + " Thousand";}
-
-        else if (end < 100){  return ones[numString[0]] + " Thousand and " + humanize(end);}
-
-    else{ 
-        return ones[numString[0]] + " Thousand " + humanize(end);}
-    }
-
-
-                        // with 5 numbers check it less the 19 or more than 
-    if (numString.length === 5) {
-        let end = +numString.slice(1);
-        
-        
         if (end === 0) {
-            return tens[numString[0]] + " thousand";
+            return ones[numString[0]] + " Thousand";
         }
-        if (end < 100) {
-            return ones[numString[0]] + " thousand and " + humanize(end);
-    } else {
-        if(beginning < 20){
-            console.log(beginning)
-            // return ones[numString[0]] + humanize(end);
-            return ones[beginning] + humanize(end);
-        }
-        return tens[numString[0]]  + humanize(end);
+        else {
+            return ones[numString[0]] + " Thousand " + humanize(end);
         }
     }
 
+             // 10,000 - 99,999 connect to beginning part
+    if (numString.length === 5) {
+        let end = +numString.slice(2);
+
+        return (beginning < 20)? ones[beginning] + ' Thousand ' + humanize(end)
+            : tens[numString[0]]+ ones[numString[1]] + ' Thousand ' + humanize(end);
+    }
+    
+             // 100,000  - 999,999
     if (numString.length === 6) {
         let end = +numString.slice(1);
-        
-        if (end === 0) {
-            return ones[numString[0]] + "  hundred thousand";
+
+        if (end == 0 ) {
+            return ones[numString[0]] + " Hundred Thousand ";
         }
-        if (end < 100) {
-            return ones[numString[0]] + "hundred thousand and " + humanize(end);
-    } else {
-            // return tens[numString[0]] +  " thousand and " + humanize(end);
-            return ones[numString[0]] + ' Hundred ' + humanize(end);
+        else {
+            return ones[numString[0]] + " Hundred  " + humanize(end);
         }
     }
 
+            // 1,000,000 - 9,999,999
     if (numString.length === 7) {
         let end = +numString.slice(1);
-        
+
         if (end === 0) {
             return ones[numString[0]] + " Million ";
-        }
-        if (end < 100) {
-            return ones[numString[0]] + " Million " + humanize(end);
-    } else {
-            // return tens[numString[0]] +  " thousand and " + humanize(end);
-            return ones[numString[0]]+ " Million " + humanize(end);
+        } else {
+            return ones[numString[0]] + " Million and " + humanize(end);
         }
     }
-                // check it more than 19 or less 
+
+
+    // check it more than 19 or less
     if (numString.length === 8) {
         let end = +numString.slice(1);
-        
+
         if (end === 0) {
             return tens[numString[0]] + " Million ";
         }
         if (end < 100) {
             return tens[numString[0]] + " Million and " + humanize(end);
-    } else {
-        // check it out 
-            if( beginning < 20){
-                
-                return ones[numString[beginning]] + humanize(end)
+        } else {
+            // check it out
+            if (beginning < 20) {
+                return ones[numString[beginning]] + humanize(end);
             }
-            return tens[numString[0]]+ humanize(end);
+            return tens[numString[0]] + humanize(end);
         }
     }
-
-
 }
+console.log(humanize(1000000)); // 
 
-console.log(humanize(23100)); // 5
-console.log(humanize(19100)); // 5
-// console.log(humanize(234587)); // 6
+console.log(humanize(1099103)); // 
+console.log(humanize(190100)); // 
+console.log(humanize(20000002)); // 
+console.log(humanize(9999999)); // 
+console.log(humanize(9000000)); // 
+console.log(humanize(1200007)); // 6
 // console.log(humanize(3000000)); // 7
 // console.log(humanize(3287456)); // 7
 // console.log(humanize(3287456)); // 7
