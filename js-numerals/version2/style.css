@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30vh;
+}
+.container div {
+    display: flex;
+    flex-direction: row;
+}
+.container input{
+    width: 25vw;
+    background-color: rgb(224, 223, 221);
+    border-radius: 7px;
+}
+
+.container button {
+    padding: 2%;
+    background-color: rgb(120, 120, 233);
+    color: white;
+    margin-left: 2%;
+    border-radius: 7px;
+}
+
+.container h2 {
+    text-decoration: underline;
+}
