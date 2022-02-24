@@ -65,7 +65,7 @@ function humanize(num) {
             );
     }
 
-    // 1,000 - 9,999
+    // 1,000 - 9,999      
     if (numString.length === 4) {
         let end = +numString.slice(1);
 
@@ -73,9 +73,11 @@ function humanize(num) {
             return ones[numString[0]] + " Thousand";
         }
         else {
-            return ones[numString[0]] + " Thousand " + humanize(end);
+            return ones[numString[0]] + " Thousand and " + humanize(end);
         }
     }
+
+
 
              // 10,000 - 99,999 connect to beginning part
     if (numString.length === 5) {
@@ -85,15 +87,21 @@ function humanize(num) {
             : tens[numString[0]]+ ones[numString[1]] + ' Thousand ' + humanize(end);
     }
     
-             // 100,000  - 999,999
+
+
+             // 100,000  - 999,999    check this part 
     if (numString.length === 6) {
-        let end = +numString.slice(1);
+        // let end = +numString.slice(1);
+        
+        let end = +numString[1] + numString[2]+ numString[3]+ numString[4]+ numString[5];
+
+        console.log(end);
 
         if (end == 0 ) {
             return ones[numString[0]] + " Hundred Thousand ";
         }
         else {
-            return ones[numString[0]] + " Hundred  " + humanize(end);
+            return ones[numString[0]] + " Hundred  Thousand " + humanize(end);
         }
     }
 
@@ -127,14 +135,14 @@ function humanize(num) {
         }
     }
 }
-console.log(humanize(1000000)); // 
+console.log(humanize(100000)); // 
 
-console.log(humanize(1099103)); // 
-console.log(humanize(190100)); // 
-console.log(humanize(20000002)); // 
-console.log(humanize(9999999)); // 
-console.log(humanize(9000000)); // 
-console.log(humanize(1200007)); // 6
+console.log(humanize(199994)); // 
+console.log(humanize(111101)); // 
+console.log(humanize(900023)); // 
+// console.log(humanize(9999999)); // 
+// console.log(humanize(9000000)); // 
+// console.log(humanize(1200007)); // 6
 // console.log(humanize(3000000)); // 7
 // console.log(humanize(3287456)); // 7
 // console.log(humanize(3287456)); // 7
